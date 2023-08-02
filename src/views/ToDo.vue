@@ -11,32 +11,35 @@
         </div>
     </form>!-->
     <!--<div :class="element.is_finished?'color':''" v-for="element in tab">  pour mettre une condition si et sinon --> 
-        <div v-bind:class="{'color barre':element.is_finished}"  v-for="element in tab">
-        <div v-if="element.is_finished">
-            <p class="barre"> {{ element.name }}</p>
-            <input type="checkbox"  :checked="element.is_finished" name="" id="" >
+    <form action="#" @submit.prevent="addToDo">
+        <div id="task">
+            <label for="task"> Quelle tache voulez-vous ajouter?</label>
+            <input type="text" v-model="newToDo">
+            <button > soumettre</button>
+            <p class="barre"> {{ newToDo }}</p>
+            <input type="checkbox" name="" id="" >
         </div>
-        <div v-else>
-            <p > {{ element.name }}</p>
-            <input type="checkbox"  :checked="element.is_finished" name="" id="" >
-            <div id="task">
-                <label for="task"> Quelle tache voulez-vous ajouter?</label>
-                <input type="text" v-model="name">
-                <button @click="tache()"> soumettre</button>
-                <p class="barre"> {{ name }}</p>
-                <input type="checkbox" name="" id="" >
+
+        <!-- <div v-bind:class="{'color barre':element.is_finished}"  v-for="element in tab">
+            <div v-if="element.is_finished">
+                <p class="barre"> {{ element.name }}</p>
+                <input type="checkbox"  :checked="element.is_finished" name="" id="" >
             </div>
-        </div>
-    </div>
+            <div v-else>
+                <p > {{ element.name }}</p>
+                <input type="checkbox"  :checked="element.is_finished" name="" id="" >
+            </div>
+        </div> -->
+    </form>
 </template>
 
 <script lang="ts" setup>
-import { METHODS } from 'http';
-import { VueElement } from 'vue';
+/* import { METHODS } from 'http';
+import { VueElement } from 'vue'; */
 
-import {ref} from 'vue'
-const count =ref(0)
-let tab=[
+import {ref} from 'vue';
+const newToDo=ref('');
+let tab=ref([
     {
         name:'lessive',
         is_finished:true
@@ -53,8 +56,12 @@ let tab=[
         name:'cuisine',
         is_finished:false
     }
- ]
-new Vue{
+ ])
+ function addToDo(){
+    tab.value.push({name:newToDo.value,is_finished:false})
+    newToDo.value=''
+ }
+/* new Vue{
     el:'#task',
     Data:{
         name:''
@@ -64,7 +71,7 @@ new Vue{
             alert(this.name);
         }
     }
-})
+}) */
 
 </script>
 
@@ -86,6 +93,10 @@ new Vue{
         margin: 0 auto;
         border: 1px solid #eee;
         border-radius: 8px;
+        padding: 35px;
+    }
+    label{
+        display: block;
     }
     .to-do-list{
         max-width: 80%;
